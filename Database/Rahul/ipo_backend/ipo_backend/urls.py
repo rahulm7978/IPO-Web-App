@@ -27,6 +27,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # Include IPO app URLs at root
-    path('', include('ipo.urls')),  # ✅ this ensures "/" routes to home
+    path('', include('ipo.urls')),  # this ensures "/" routes to home
 ]
 
