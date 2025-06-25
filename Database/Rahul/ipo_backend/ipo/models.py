@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Company(models.Model):
     company_name = models.CharField(max_length=255)
     company_logo = models.URLField(max_length=500)  # or use ImageField with media settings
@@ -34,6 +34,9 @@ class IPO(models.Model):
     def __str__(self):
         return f"{self.company.company_name} IPO"
 
+    class Meta:
+        db_table = 'ipos'  # map to existing PostgreSQL table
+
 
 class Document(models.Model):
     ipo = models.ForeignKey(IPO, on_delete=models.CASCADE, related_name='documents')
@@ -42,3 +45,31 @@ class Document(models.Model):
 
     def __str__(self):
         return f"Docs for {self.ipo}"
+
+    class Meta:
+        db_table = 'documents'
+
+
+class User(models.Model):
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    role = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        db_table = 'users'
+
+class Application(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='applications')
+    ipo = models.ForeignKey(IPO, on_delete=models.CASCADE, related_name='applications')
+    quantity = models.IntegerField(blank=True, null=True)
+    status = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.ipo}"
+
+    class Meta:
+        db_table = 'applications'

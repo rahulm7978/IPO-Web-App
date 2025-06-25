@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Company, IPO, Document
+from .models import Company, IPO, Document,User,Application
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
@@ -17,3 +17,16 @@ class IPOAdmin(admin.ModelAdmin):
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ('ipo',)
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'name', 'role')
+    search_fields = ('email', 'name', 'role')
+    list_filter = ('role',)
+
+
+@admin.register(Application)
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'ipo', 'quantity', 'status')
+    list_filter = ('status',)
+    search_fields = ('user__email', 'ipo__company_name')
