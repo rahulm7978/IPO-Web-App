@@ -8,15 +8,15 @@ class CompanySerializer(serializers.ModelSerializer):
 
 
 class IPOSerializer(serializers.ModelSerializer):
-    company = CompanySerializer(read_only=True)
-
+    company = serializers.PrimaryKeyRelatedField(queryset=Company.objects.all())
+    company_detail = CompanySerializer(source='company', read_only=True)
     class Meta:
         model = IPO
         fields = '__all__'
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    ipo = IPOSerializer(read_only=True)
+    ipo = serializers.PrimaryKeyRelatedField(queryset=IPO.objects.all())
 
     class Meta:
         model = Document
