@@ -1,4 +1,4 @@
-# Rahul's IPO Backend – Django + DRF
+# IPO Backend – Django + DRF
 
 This folder contains the complete backend code for the **IPO Web Application**, developed as part of the Bluestock Fintech internship program.
 
